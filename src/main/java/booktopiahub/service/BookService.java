@@ -1,10 +1,13 @@
 package booktopiahub.service;
 
-import booktopiahub.model.Book;
+import booktopiahub.dto.BookDto;
+import booktopiahub.dto.CreateBookRequestDto;
 import java.util.List;
 
 public interface BookService {
-    Book save(Book book);
+    BookDto save(CreateBookRequestDto requestDto);
 
-    List<Book> getAll();
+    List<BookDto> getAll();
+
+    BookDto findById(Long id);
 }
