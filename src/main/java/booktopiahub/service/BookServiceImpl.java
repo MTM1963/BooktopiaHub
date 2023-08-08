@@ -10,6 +10,7 @@ import booktopiahub.repository.book.BookRepository;
 import booktopiahub.repository.book.BookSpecificationBuilder;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> getAll() {
-        return bookRepository.findAll()
+    public List<BookDto> getAll(Pageable pageable) {
+        return bookRepository.findAll(pageable)
                 .stream().map(bookMapper::toDto)
                 .toList();
     }
