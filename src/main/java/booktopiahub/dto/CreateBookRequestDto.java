@@ -16,7 +16,7 @@ public class CreateBookRequestDto {
     @Column(unique = true)
     private String isbn;
     @NotNull
-    @Min(0)
+    @Min(value = 0)
     private BigDecimal price;
     @NotNull
     private String description;
