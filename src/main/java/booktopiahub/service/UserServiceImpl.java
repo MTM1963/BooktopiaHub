@@ -1,6 +1,5 @@
 package booktopiahub.service;
 
-import booktopiahub.dto.user.CreateUserRequestDto;
 import booktopiahub.dto.user.UserDto;
 import booktopiahub.dto.user.UserRegistrationRequest;
 import booktopiahub.dto.user.UserResponseDto;
@@ -20,12 +19,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-
-    @Override
-    public UserDto add(CreateUserRequestDto requestDto) {
-        User user = userMapper.toModel(requestDto);
-        return userMapper.toDto(userRepository.save(user));
-    }
 
     @Override
     public UserDto get(Long id) {
