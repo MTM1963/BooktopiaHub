@@ -1,4 +1,4 @@
-package booktopiahub.dto;
+package booktopiahub.dto.book;
 
 import java.math.BigDecimal;
 import lombok.Data;

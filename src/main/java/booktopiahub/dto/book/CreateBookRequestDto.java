@@ -1,4 +1,4 @@
-package booktopiahub.dto;
+package booktopiahub.dto.book;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

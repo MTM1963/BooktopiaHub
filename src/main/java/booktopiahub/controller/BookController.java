@@ -1,8 +1,8 @@
 package booktopiahub.controller;
 
-import booktopiahub.dto.BookDto;
-import booktopiahub.dto.BookSearchParametersDto;
-import booktopiahub.dto.CreateBookRequestDto;
+import booktopiahub.dto.book.BookDto;
+import booktopiahub.dto.book.BookSearchParametersDto;
+import booktopiahub.dto.book.CreateBookRequestDto;
 import booktopiahub.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

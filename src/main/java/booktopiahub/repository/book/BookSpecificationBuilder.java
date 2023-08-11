@@ -1,6 +1,6 @@
 package booktopiahub.repository.book;
 
-import booktopiahub.dto.BookSearchParametersDto;
+import booktopiahub.dto.book.BookSearchParametersDto;
 import booktopiahub.model.Book;
 import booktopiahub.repository.SpecificationBuilder;
 import booktopiahub.repository.SpecificationProviderManager;
