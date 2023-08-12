@@ -1,21 +1,20 @@
 databaseChangeLog:
   - changeSet:
-      id: create-role-table
-      author: booktopiaHub
+      id: create user-role-table
+      author: booktopiahub
       changes:
         - createTable:
-            tableName: role
+            tableName: user_roles
             columns:
               - column:
-                  name: id
+                  name: user_id
                   type: bigint
-                  autoIncrement: true
                   constraints:
-                    primaryKey: true
                     nullable: false
               - column:
-                  name: role_name
-                  type: varchar(255)
+                  name: role_id
+                  type: bigint
                   constraints:
                     nullable: false
-                    unique: true
+                    primaryKey:
+                      columnNames: user_id, role_id

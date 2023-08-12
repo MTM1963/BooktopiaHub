@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: create-book-table
-      author: booktopiaHub
+      author: booktest
       changes:
         - createTable:
             tableName: book
