@@ -3,7 +3,7 @@ package booktopiahub.controller;
 import booktopiahub.dto.book.BookDto;
 import booktopiahub.dto.book.BookSearchParametersDto;
 import booktopiahub.dto.book.CreateBookRequestDto;
-import booktopiahub.service.BookService;
+import booktopiahub.service.book.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

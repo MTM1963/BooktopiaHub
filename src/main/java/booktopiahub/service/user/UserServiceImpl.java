@@ -1,4 +1,4 @@
-package booktopiahub.service;
+package booktopiahub.service.user;
 
 import booktopiahub.dto.user.UserRegistrationRequest;
 import booktopiahub.dto.user.UserResponseDto;
@@ -8,6 +8,7 @@ import booktopiahub.model.Role;
 import booktopiahub.model.Role.RoleName;
 import booktopiahub.model.User;
 import booktopiahub.repository.user.UserRepository;
+import booktopiahub.service.role.RoleService;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;

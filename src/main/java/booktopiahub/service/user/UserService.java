@@ -1,4 +1,4 @@
-package booktopiahub.service;
+package booktopiahub.service.user;
 
 import booktopiahub.dto.user.UserRegistrationRequest;
 import booktopiahub.dto.user.UserResponseDto;
