@@ -1,8 +1,8 @@
 package booktopiahub.service;
 
-import booktopiahub.dto.BookDto;
-import booktopiahub.dto.BookSearchParametersDto;
-import booktopiahub.dto.CreateBookRequestDto;
+import booktopiahub.dto.book.BookDto;
+import booktopiahub.dto.book.BookSearchParametersDto;
+import booktopiahub.dto.book.CreateBookRequestDto;
 import booktopiahub.exception.EntityNotFoundException;
 import booktopiahub.mapper.BookMapper;
 import booktopiahub.model.Book;

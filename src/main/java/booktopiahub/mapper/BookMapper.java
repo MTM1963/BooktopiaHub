@@ -1,8 +1,8 @@
 package booktopiahub.mapper;
 
 import booktopiahub.config.MapperConfig;
-import booktopiahub.dto.BookDto;
-import booktopiahub.dto.CreateBookRequestDto;
+import booktopiahub.dto.book.BookDto;
+import booktopiahub.dto.book.CreateBookRequestDto;
 import booktopiahub.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

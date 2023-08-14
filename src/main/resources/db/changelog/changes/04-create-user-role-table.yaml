@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: create user-role-table
+      author: booktopiahub
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    primaryKey:
+                      columnNames: user_id, role_id
