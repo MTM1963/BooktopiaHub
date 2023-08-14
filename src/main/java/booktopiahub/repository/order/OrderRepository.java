@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Order findByUserId(Long userId);
 
-    @Query("SELECT o FROM Order o WHERE o.id = :orderId AND EXISTS (SELECT oi FROM o.orderItems oi WHERE oi.id = :orderItemsId)")
-    Optional<Order> findByOrderIdAndOrderItemId(@Param("orderId") Long orderId, @Param("orderItemsId") Long orderItemsId);
+    @Query("SELECT o FROM Order o WHERE o.id = :orderId "
+            + "AND EXISTS (SELECT oi FROM o.orderItems oi WHERE oi.id = :orderItemsId)")
+    Optional<Order> findByOrderIdAndOrderItemId(@Param("orderId") Long orderId,
+                                                @Param("orderItemsId") Long orderItemsId);
 }
