@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     @Operation(summary = "Get all categories",
             description = "Get a list of all available carts")
@@ -25,6 +27,7 @@ public class ShoppingCartController {
         return shoppingCartService.getAll(pageable);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{userId}")
     @Operation(summary = "Get shopping cart by user id",
             description = "Get available cart by userId")

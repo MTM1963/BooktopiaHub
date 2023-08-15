@@ -9,6 +9,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
     private final CategoryService categoryService;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     @Operation(summary = "Get all categories",
             description = "Get a list of all available categories")
@@ -31,12 +33,14 @@ public class CategoryController {
         return categoryService.getAll(pageable);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     @Operation(summary = "Get category by id", description = "Get available category by id")
     public CategoryDto getCategoryById(@PathVariable Long id) {
         return categoryService.findById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(summary = "Save category to repository",
             description = "Save valid category to repository")
@@ -44,6 +48,7 @@ public class CategoryController {
         return categoryService.save(requestDto);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete category by id",
             description = "Soft delete of available category by id")
@@ -51,6 +56,7 @@ public class CategoryController {
         categoryService.deleteById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update category by id", description = "Update available category by id")
     public CategoryDto update(@PathVariable Long id,

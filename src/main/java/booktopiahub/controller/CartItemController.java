@@ -7,6 +7,7 @@ import booktopiahub.service.shoppingcart.cartitem.CartItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartItemController {
     private final CartItemService cartItemService;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{bookId}")
     @Operation(summary = "Get cartItem by book id",
             description = "Get available cart item by bookId")
@@ -29,6 +31,7 @@ public class CartItemController {
         return cartItemService.getByBookId(bookId);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete cart-item by id",
             description = "Soft delete of available cart-item by id")
@@ -36,6 +39,7 @@ public class CartItemController {
         cartItemService.deleteById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update cart-item by id",
             description = "Update available cart-item by id")
@@ -44,6 +48,7 @@ public class CartItemController {
         return cartItemService.update(id, requestDto);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(summary = "Add book to cartItem", description = "Add valid book to cartItem")
     public CartItemDto addBook(@RequestBody @Valid CreateCartItemRequestDto requestDto) {
