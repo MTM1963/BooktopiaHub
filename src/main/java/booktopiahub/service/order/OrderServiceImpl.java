@@ -4,11 +4,9 @@ import booktopiahub.dto.order.CreateOrderRequestDto;
 import booktopiahub.dto.order.OrderDto;
 import booktopiahub.dto.order.UpdateOrderRequestDto;
 import booktopiahub.exception.EntityNotFoundException;
-import booktopiahub.mapper.OrderItemMapper;
 import booktopiahub.mapper.OrderMapper;
 import booktopiahub.model.Order;
 import booktopiahub.repository.order.OrderRepository;
-import booktopiahub.repository.order.orderitem.OrderItemRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +17,6 @@ import org.springframework.stereotype.Service;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
-    private final OrderItemRepository orderItemRepository;
-    private final OrderItemMapper orderItemMapper;
 
     @Override
     public OrderDto update(Long id, UpdateOrderRequestDto requestDto) {
