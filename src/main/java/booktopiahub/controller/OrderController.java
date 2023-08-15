@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ public class OrderController {
 
     @GetMapping
     @Operation(summary = "Get all orders", description = "Get a list of all available orders")
-    public List<OrderDto> findAll(Pageable pageable) {
+    public List<OrderDto> findAll(@ParameterObject Pageable pageable) {
         return orderService.getAll(pageable);
     }
 

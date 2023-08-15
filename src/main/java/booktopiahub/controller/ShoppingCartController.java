@@ -5,6 +5,7 @@ import booktopiahub.service.shoppingcart.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ public class ShoppingCartController {
     @GetMapping
     @Operation(summary = "Get all categories",
             description = "Get a list of all available carts")
-    public List<ShoppingCartDto> findAll(Pageable pageable) {
+    public List<ShoppingCartDto> findAll(@ParameterObject Pageable pageable) {
         return shoppingCartService.getAll(pageable);
     }
 

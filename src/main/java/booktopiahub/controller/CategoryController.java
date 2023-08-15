@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class CategoryController {
     @GetMapping
     @Operation(summary = "Get all categories",
             description = "Get a list of all available categories")
-    public List<CategoryDto> findAll(Pageable pageable) {
+    public List<CategoryDto> findAll(@ParameterObject Pageable pageable) {
         return categoryService.getAll(pageable);
     }
 
