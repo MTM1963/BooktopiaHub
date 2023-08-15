@@ -1,6 +1,6 @@
 package booktopiahub;
 
-import booktopiahub.service.BookService;
+import booktopiahub.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

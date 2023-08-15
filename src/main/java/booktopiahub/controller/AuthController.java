@@ -6,7 +6,7 @@ import booktopiahub.dto.user.UserRegistrationRequest;
 import booktopiahub.dto.user.UserResponseDto;
 import booktopiahub.exception.RegistrationException;
 import booktopiahub.security.AuthenticationService;
-import booktopiahub.service.UserService;
+import booktopiahub.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

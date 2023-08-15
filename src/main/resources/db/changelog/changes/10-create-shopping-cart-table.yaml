@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-shopping-cart-and-add-user-column
+      author: booktopiahub
+      changes:
+        - createTable:
+            tableName: shopping_cart
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+  - changeSet:
+      id: add-user-column-to-shopping-cart
+      author: booktopiahub
+      changes:
+        - addColumn:
+            tableName: shopping_cart
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false

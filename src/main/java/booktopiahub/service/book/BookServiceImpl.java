@@ -1,4 +1,4 @@
-package booktopiahub.service;
+package booktopiahub.service.book;
 
 import booktopiahub.dto.book.BookDto;
 import booktopiahub.dto.book.BookSearchParametersDto;

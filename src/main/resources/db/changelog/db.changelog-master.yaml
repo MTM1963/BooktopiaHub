@@ -13,3 +13,21 @@ databaseChangeLog:
       file: db/changelog/changes/06-set-bcrypt-password.yaml
   - include:
       file: db/changelog/changes/07-insert-role.yaml
+  - include:
+      file: db/changelog/changes/08-create-category-table.yaml
+  - include:
+      file: db/changelog/changes/09-create-category-book-table.yaml
+  - include:
+      file: db/changelog/changes/10-create-shopping-cart-table.yaml
+  - include:
+      file: db/changelog/changes/11-create-shopping-cart-user-table.yaml
+  - include:
+      file: db/changelog/changes/12-create-cart-item-table.yaml
+  - include:
+      file: db/changelog/changes/13-create-shopping-cart-item-table.yaml
+  - include:
+      file: db/changelog/changes/14-create-order-table.yaml
+  - include:
+      file: db/changelog/changes/15-create-order-item-table.yaml
+  - include:
+      file: db/changelog/changes/16-create-order-order-item-table.yaml
