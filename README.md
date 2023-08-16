@@ -64,7 +64,7 @@ To connect to your DB, you should replace PlaceHolders in .env and application.p
 
 ## Cart-Item 💵
 - Get cart-item by book id
-- - Create/update/remove a cart-item
+- Create/update/remove a cart-item
 
 ## Order 💵
 - Create/update/remove a order
