@@ -4,7 +4,8 @@
 - 🫡Welcome to the BooktopiaHub project!🫡
 - 😉This is a web application that provides various features including authentication, registration, and CRUD (Create, Read, Update, Delete) operations😉
 - The project is built using the Hibernate and Spring frameworks, Spring Boot, which provide powerful tools for interacting with databases and developing robust web applications.
--  With the BooktopiaHub, users can enjoy a simplified and user-friendly experience while managing book-store data and operations.
+- Also project is built using liquibase and docker.
+- With the BooktopiaHub, users can enjoy a simplified and user-friendly experience while managing book-store data and operations.
   
 ## Setup
 
