@@ -15,4 +15,5 @@ public class OrderDto {
     private LocalDate orderDate;
     private BigDecimal total;
     private Order.Status status;
+    private String shippingAddress;
 }

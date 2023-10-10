@@ -5,10 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import booktopiahub.dto.book.BookDto;
-import booktopiahub.dto.book.CreateBookRequestDto;
+import booktopiahub.dto.category.CategoryDto;
+import booktopiahub.dto.category.CreateCategoryRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Disabled
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class BookControllerTest {
+class CategoryControllerTest {
     protected static MockMvc mockMvc;
 
     @Autowired
@@ -45,68 +44,57 @@ class BookControllerTest {
     }
 
     @Test
-    void getAll_GivenBooksInCatalog() throws Exception {
-        List<BookDto> expected = new ArrayList<>();
-        expected.add(new BookDto()
-                .setId(1L)
-                .setTitle("test1")
-                .setAuthor("test1")
-                .setIsbn("test1")
-                .setPrice(BigDecimal.valueOf(50))
-                .setDescription("test1").setCoverImage("test1"));
+    void getAll_GivenCategoriesInCatalog() throws Exception {
+        CategoryDto categoryFirst = new CategoryDto();
+        categoryFirst.setId(1L);
+        categoryFirst.setName("test1");
+        categoryFirst.setDescription("test1");
 
-        expected.add(new BookDto()
-                .setId(2L)
-                .setTitle("test2")
-                .setAuthor("test2")
-                .setIsbn("test2")
-                .setPrice(BigDecimal.valueOf(60))
-                .setDescription("test2").setCoverImage("test2"));
+        CategoryDto categorySecond = new CategoryDto();
+        categorySecond.setId(2L);
+        categorySecond.setName("test2");
+        categorySecond.setDescription("test2");
 
-        MvcResult result = mockMvc.perform(get("/books")
+        List<CategoryDto> expected = new ArrayList<>();
+        expected.add(categoryFirst);
+        expected.add(categorySecond);
+
+        MvcResult result = mockMvc.perform(get("/categories")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        BookDto[] actual = objectMapper.readValue(result.getResponse()
-                .getContentAsByteArray(), BookDto[].class);
+        CategoryDto[] actual = objectMapper.readValue(result.getResponse()
+                .getContentAsByteArray(), CategoryDto[].class);
         Assertions.assertEquals(2, actual.length);
         Assertions.assertEquals(expected, Arrays.stream(actual).toList());
     }
 
     @Test
-    void getBookById() {
+    void getCategoryById() {
     }
 
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
-    void saveBook_ValidRequestDto_Success() throws Exception {
-        CreateBookRequestDto requestDto = new CreateBookRequestDto()
-                .setTitle("test")
-                .setAuthor("test")
-                .setIsbn("test")
-                .setPrice(BigDecimal.valueOf(50))
-                .setDescription("test")
-                .setCoverImage("test");
+    void saveCategory_ValidRequestDto_Success() throws Exception {
+        CreateCategoryRequestDto requestDto = new CreateCategoryRequestDto();
+        requestDto.setName("test");
+        requestDto.setDescription("test");
 
-        BookDto expected = new BookDto()
-                .setTitle(requestDto.getTitle())
-                .setAuthor(requestDto.getAuthor())
-                .setIsbn(requestDto.getIsbn())
-                .setPrice(requestDto.getPrice())
-                .setDescription(requestDto.getDescription())
-                .setCoverImage(requestDto.getCoverImage());
+        CategoryDto expected = new CategoryDto();
+        expected.setName(requestDto.getName());
+        expected.setDescription(requestDto.getDescription());
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
-        MvcResult result = mockMvc.perform(post("/books")
+        MvcResult result = mockMvc.perform(post("/categories")
                 .content(jsonRequest)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
 
-        BookDto actual = objectMapper.readValue(result.getResponse()
-                .getContentAsString(), BookDto.class);
+        CategoryDto actual = objectMapper.readValue(result.getResponse()
+                .getContentAsString(), CategoryDto.class);
 
         Assertions.assertNotNull(actual);
         Assertions.assertNotNull(actual.getId());
@@ -120,8 +108,5 @@ class BookControllerTest {
     @Test
     void update() {
     }
-
-    @Test
-    void searchBooks() {
-    }
 }
+
