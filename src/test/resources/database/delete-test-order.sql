@@ -1,0 +1,1 @@
+delete from orders where  shipping_address = 'Lviv, Ukraine'

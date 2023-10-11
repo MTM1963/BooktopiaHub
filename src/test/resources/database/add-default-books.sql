@@ -1,0 +1,5 @@
+INSERT INTO BOOK (TITLE, AUTHOR, ISBN, PRICE, DESCRIPTION, COVER_IMAGE)
+VALUES ('test1', 'test1', 'test1', 50.0, 'test1', 'test1');
+
+INSERT INTO BOOK (TITLE, AUTHOR, ISBN, PRICE, DESCRIPTION, COVER_IMAGE)
+VALUES ('test2', 'test2', 'test2', 60.0, 'test2', 'test2');

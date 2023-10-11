@@ -4,7 +4,7 @@ databaseChangeLog:
       author: booktopiahub
       changes:
         - createTable:
-            tableName: "order"
+            tableName: orders
             columns:
               - column:
                   name: id
@@ -39,8 +39,8 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
-            baseTableName: "order"
-            baseColumnNames: "user_id"
-            referencedTableName: "user"
-            referencedColumnNames: "id"
-            constraintName: "fk_order_user"
+            baseTableName: orders
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_order_user

@@ -1,0 +1,1 @@
+DELETE FROM cart_item WHERE quantity = 5 AND book_id = 1
