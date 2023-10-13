@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     @Operation(summary = "Get all categories",
             description = "Get a list of all available categories")
@@ -35,14 +35,14 @@ public class CategoryController {
         return categoryService.getAll(pageable);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{id}")
     @Operation(summary = "Get category by id", description = "Get available category by id")
     public CategoryDto getCategoryById(@PathVariable Long id) {
         return categoryService.findById(id);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Save category to repository",
@@ -51,7 +51,7 @@ public class CategoryController {
         return categoryService.save(requestDto);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete category by id",
             description = "Soft delete of available category by id")
@@ -59,7 +59,7 @@ public class CategoryController {
         categoryService.deleteById(id);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update category by id", description = "Update available category by id")
     public CategoryDto update(@PathVariable Long id,

@@ -1,5 +1,6 @@
 package booktopiahub.controller;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -88,23 +89,8 @@ class OrderControllerTest {
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void getAll_GivenOrdersInCatalog() throws Exception {
-        OrderDto orderFirst = new OrderDto()
-                .setId(1L)
-                .setUserId(1L)
-                .setTotal(BigDecimal.valueOf(50))
-                .setStatus(Order.Status.PENDING)
-                .setOrderDate(LocalDate.now())
-                .setOrderItems(Set.of())
-                .setShippingAddress("Kyiv, Ukraine");
-
-        OrderDto orderSecond = new OrderDto()
-                .setId(2L)
-                .setUserId(2L)
-                .setTotal(BigDecimal.valueOf(60))
-                .setStatus(Order.Status.PENDING)
-                .setOrderDate(LocalDate.now())
-                .setOrderItems(Set.of())
-                .setShippingAddress("Lviv, Ukraine");
+        OrderDto orderFirst = createExpectedOrderDto(1L, 1L);
+        OrderDto orderSecond = createExpectedOrderDto(2L, 2L);
 
         List<OrderDto> expected = new ArrayList<>();
         expected.add(orderFirst);
@@ -127,14 +113,7 @@ class OrderControllerTest {
         Long orderId = 1L;
         User user = new User();
         user.setId(1L);
-        OrderDto expected = new OrderDto()
-                .setId(orderId)
-                .setUserId(user.getId())
-                .setTotal(BigDecimal.valueOf(50))
-                .setStatus(Order.Status.PENDING)
-                .setOrderDate(LocalDate.now())
-                .setOrderItems(Set.of())
-                .setShippingAddress("Kyiv, Ukraine");
+        OrderDto expected = createExpectedOrderDto(1L, user.getId());
 
         MvcResult result = mockMvc.perform(get("/orders/{id}", orderId)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -144,8 +123,8 @@ class OrderControllerTest {
         OrderDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), OrderDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
 
@@ -155,14 +134,7 @@ class OrderControllerTest {
         Long userId = 1L;
         User user = new User();
         user.setId(userId);
-        OrderDto expected = new OrderDto()
-                .setId(1L)
-                .setUserId(user.getId())
-                .setTotal(BigDecimal.valueOf(50))
-                .setStatus(Order.Status.PENDING)
-                .setOrderDate(LocalDate.now())
-                .setOrderItems(Set.of())
-                .setShippingAddress("Kyiv, Ukraine");
+        OrderDto expected = createExpectedOrderDto(1L, user.getId());
 
         MvcResult result = mockMvc.perform(get("/orders/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -172,8 +144,8 @@ class OrderControllerTest {
         OrderDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), OrderDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
 
@@ -181,13 +153,10 @@ class OrderControllerTest {
     void testUpdateOrderStatus() throws Exception {
         UpdateOrderRequestDto requestDto = new UpdateOrderRequestDto()
                 .setStatus(Order.Status.DELIVERED);
-
         Long orderId = 1L;
-
         OrderDto updated = new OrderDto()
                 .setId(orderId)
                 .setStatus(requestDto.getStatus());
-
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         MvcResult result = mockMvc.perform(put("/orders/{id}", orderId)
@@ -199,8 +168,8 @@ class OrderControllerTest {
         OrderDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), OrderDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(updated, actual, "id");
     }
 
@@ -228,8 +197,19 @@ class OrderControllerTest {
         OrderDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), OrderDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(expected, actual, "id");
+    }
+
+    private OrderDto createExpectedOrderDto(Long orderId, Long userId) {
+        return new OrderDto()
+                .setId(orderId)
+                .setUserId(userId)
+                .setTotal(BigDecimal.valueOf(50))
+                .setStatus(Order.Status.PENDING)
+                .setOrderDate(LocalDate.now())
+                .setOrderItems(Set.of())
+                .setShippingAddress("Kyiv, Ukraine");
     }
 }

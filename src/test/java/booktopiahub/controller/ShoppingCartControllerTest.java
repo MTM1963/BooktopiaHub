@@ -1,5 +1,6 @@
 package booktopiahub.controller;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -93,15 +94,9 @@ class ShoppingCartControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     void getAll_GivenCartsInCatalog() throws Exception {
-        ShoppingCartDto cartFirst = new ShoppingCartDto()
-                .setId(1L)
-                .setUserId(1L)
-                .setCartItemSet(Set.of());
+        ShoppingCartDto cartFirst = createExpectedShoppingCartDto(1L, 1L);
 
-        ShoppingCartDto cartSecond = new ShoppingCartDto()
-                .setId(1L)
-                .setUserId(2L)
-                .setCartItemSet(Set.of());
+        ShoppingCartDto cartSecond = createExpectedShoppingCartDto(2L, 2L);
 
         List<ShoppingCartDto> expected = new ArrayList<>();
         expected.add(cartFirst);
@@ -123,10 +118,7 @@ class ShoppingCartControllerTest {
         Long userId = 2L;
         User user = new User();
         user.setId(userId);
-        ShoppingCartDto expected = new ShoppingCartDto()
-                .setId(2L)
-                .setUserId(user.getId())
-                .setCartItemSet(Set.of());
+        ShoppingCartDto expected = createExpectedShoppingCartDto(2L, userId);
 
         MvcResult result = mockMvc.perform(get("/cart/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -136,8 +128,15 @@ class ShoppingCartControllerTest {
         ShoppingCartDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), ShoppingCartDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(expected, actual, "id");
+    }
+
+    private ShoppingCartDto createExpectedShoppingCartDto(Long id, Long userId) {
+        return new ShoppingCartDto()
+                .setId(id)
+                .setUserId(userId)
+                .setCartItemSet(Set.of());
     }
 }

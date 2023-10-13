@@ -1,5 +1,6 @@
 package booktopiahub.controller;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,7 +19,6 @@ import javax.sql.DataSource;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -104,11 +104,7 @@ class CartItemControllerTest {
         Book book = new Book();
         book.setId(bookId);
         book.setTitle("test");
-        CartItemDto expected = new CartItemDto()
-                .setId(1L)
-                .setQuantity(10)
-                .setBookId(book.getId())
-                .setShoppingCartId(2L);
+        CartItemDto expected = createExpectedCartItemDto(1L, 10, bookId, 1L);
 
         MvcResult result = mockMvc.perform(get("/cart/cart-items/{bookId}", bookId)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -118,8 +114,8 @@ class CartItemControllerTest {
         CartItemDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), CartItemDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
 
@@ -155,8 +151,8 @@ class CartItemControllerTest {
         CartItemDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), CartItemDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(updated, actual, "id");
     }
 
@@ -174,10 +170,7 @@ class CartItemControllerTest {
                 .setBookId(bookId)
                 .setShoppingCartId(cartId);
 
-        CartItemDto expected = new CartItemDto()
-                .setQuantity(requestDto.getQuantity())
-                .setBookId(requestDto.getBookId())
-                .setShoppingCartId(requestDto.getShoppingCartId());
+        CartItemDto expected = createExpectedCartItemDto(1L, 10, bookId, cartId);
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
@@ -189,8 +182,19 @@ class CartItemControllerTest {
 
         CartItemDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), CartItemDto.class);
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(expected, actual, "id");
+    }
+
+    private CartItemDto createExpectedCartItemDto(Long id,
+                                                  int quantity,
+                                                  Long bookId,
+                                                  Long shoppingCartId) {
+        return new CartItemDto()
+                .setId(id)
+                .setQuantity(quantity)
+                .setBookId(bookId)
+                .setShoppingCartId(shoppingCartId);
     }
 }

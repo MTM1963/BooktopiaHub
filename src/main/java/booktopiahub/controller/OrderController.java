@@ -27,14 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private final OrderService orderService;
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     @Operation(summary = "Get all orders", description = "Get a list of all available orders")
     public List<OrderDto> findAll(@ParameterObject Pageable pageable) {
         return orderService.getAll(pageable);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{id}")
     @Operation(summary = "Get order by id", description = "Get available order by id")
     public OrderDto getOrderById(@PathVariable Long id) {
@@ -56,7 +56,7 @@ public class OrderController {
         return orderService.update(id, requestDto);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Add order to repository", description = "Add valid order to repository")
@@ -64,7 +64,7 @@ public class OrderController {
         return orderService.addOrder(requestDto);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{id}/items/{orderItemId}")
     @Operation(summary = "Get orderitem by order id and item id",
             description = "Get available orderitem by order id and item id")

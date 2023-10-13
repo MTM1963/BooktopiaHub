@@ -1,5 +1,6 @@
 package booktopiahub.controller;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -85,21 +86,10 @@ class BookControllerTest {
     @Test
     void getAll_GivenBooksInCatalog() throws Exception {
         List<BookDto> expected = new ArrayList<>();
-        expected.add(new BookDto()
-                .setId(1L)
-                .setTitle("test1")
-                .setAuthor("test1")
-                .setIsbn("test1")
-                .setPrice(BigDecimal.valueOf(50.00))
-                .setDescription("test1").setCoverImage("test1"));
-
-        expected.add(new BookDto()
-                .setId(2L)
-                .setTitle("test2")
-                .setAuthor("test2")
-                .setIsbn("test2")
-                .setPrice(BigDecimal.valueOf(60.00))
-                .setDescription("test2").setCoverImage("test2"));
+        BookDto firstBook = createExpectedBookDto(1L);
+        BookDto secondBook = createExpectedBookDto(2L);
+        expected.add(firstBook);
+        expected.add(secondBook);
 
         MvcResult result = mockMvc.perform(get("/books")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -115,14 +105,7 @@ class BookControllerTest {
     @Test
     void getBookById() throws Exception {
         Long bookId = 1L;
-        BookDto expected = new BookDto()
-                .setTitle("test")
-                .setAuthor("test")
-                .setIsbn("test")
-                .setPrice(BigDecimal.valueOf(50.00))
-                .setDescription("test")
-                .setCoverImage("test");
-
+        BookDto expected = createExpectedBookDto(bookId);
         MvcResult result = mockMvc.perform(get("/books/{id}", bookId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -131,8 +114,8 @@ class BookControllerTest {
         BookDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), BookDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
 
@@ -143,21 +126,9 @@ class BookControllerTest {
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     void saveBook_ValidRequestDto_Success() throws Exception {
-        CreateBookRequestDto requestDto = new CreateBookRequestDto()
-                .setTitle("test")
-                .setAuthor("test")
-                .setIsbn("testnew")
-                .setPrice(BigDecimal.valueOf(50))
-                .setDescription("test")
-                .setCoverImage("test");
+        CreateBookRequestDto requestDto = createBookRequestDto();
 
-        BookDto expected = new BookDto()
-                .setTitle(requestDto.getTitle())
-                .setAuthor(requestDto.getAuthor())
-                .setIsbn(requestDto.getIsbn())
-                .setPrice(requestDto.getPrice())
-                .setDescription(requestDto.getDescription())
-                .setCoverImage(requestDto.getCoverImage());
+        BookDto expected = createExpectedBookDto(1L);
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
@@ -170,8 +141,8 @@ class BookControllerTest {
         BookDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), BookDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
 
@@ -188,24 +159,10 @@ class BookControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     void updateBook() throws Exception {
-        CreateBookRequestDto requestDto = new CreateBookRequestDto()
-                .setTitle("test")
-                .setAuthor("test")
-                .setIsbn("test")
-                .setPrice(BigDecimal.valueOf(50))
-                .setDescription("test")
-                .setCoverImage("test");
-
+        CreateBookRequestDto requestDto = createBookRequestDto();
         Long bookId = 1L;
 
-        BookDto updatedBook = new BookDto()
-                .setId(bookId)
-                .setTitle(requestDto.getTitle())
-                .setAuthor(requestDto.getAuthor())
-                .setIsbn(requestDto.getIsbn())
-                .setPrice(requestDto.getPrice())
-                .setDescription(requestDto.getDescription())
-                .setCoverImage(requestDto.getCoverImage());
+        BookDto updatedBook = createExpectedBookDto(bookId);
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
@@ -218,8 +175,29 @@ class BookControllerTest {
         BookDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), BookDto.class);
 
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual.getId());
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
         EqualsBuilder.reflectionEquals(updatedBook, actual, "id");
+    }
+
+    private BookDto createExpectedBookDto(Long id) {
+        return new BookDto()
+                .setId(id)
+                .setTitle("test1")
+                .setAuthor("test1")
+                .setIsbn("test1")
+                .setPrice(BigDecimal.valueOf(50))
+                .setDescription("test1")
+                .setCoverImage("test1");
+    }
+
+    private CreateBookRequestDto createBookRequestDto() {
+        return new CreateBookRequestDto()
+                .setTitle("test")
+                .setAuthor("test")
+                .setIsbn("testnew")
+                .setPrice(BigDecimal.valueOf(50))
+                .setDescription("test")
+                .setCoverImage("test");
     }
 }

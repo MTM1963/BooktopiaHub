@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartItemController {
     private final CartItemService cartItemService;
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{bookId}")
     @Operation(summary = "Get cartItem by book id",
             description = "Get available cart item by bookId")
@@ -33,7 +33,7 @@ public class CartItemController {
         return cartItemService.getByBookId(bookId);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete cart-item by id",
             description = "Soft delete of available cart-item by id")
@@ -41,7 +41,7 @@ public class CartItemController {
         cartItemService.deleteById(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update cart-item by id",
             description = "Update available cart-item by id")
@@ -50,7 +50,7 @@ public class CartItemController {
         return cartItemService.update(id, requestDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Add book to cartItem", description = "Add valid book to cartItem")

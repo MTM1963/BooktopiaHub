@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderItemController {
     private final OrderItemService orderItemService;
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{id}")
     @Operation(summary = "Get orderItem by id", description = "Get avalilable orderItem by id")
     public OrderItemDto getOrderItemById(@PathVariable Long id) {
         return orderItemService.findById(id);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{bookId}")
     @Operation(summary = "Get orderItem by bookId",
             description = "Get available orderItem by bookId")

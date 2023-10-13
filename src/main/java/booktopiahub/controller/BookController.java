@@ -30,21 +30,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     @Operation(summary = "Get all books", description = "Get a list of all available books")
     public List<BookDto> findAll(@ParameterObject Pageable pageable) {
         return bookService.getAll(pageable);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{id}")
     @Operation(summary = "Get book by id", description = "Get available book by id")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.findById(id);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Save book to repository", description = "Save valid book to repository")
@@ -52,14 +52,14 @@ public class BookController {
         return bookService.save(requestDto);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete book by id", description = "Soft delete of available book by id")
     public void deleteById(@PathVariable Long id) {
         bookService.deleteById(id);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update book by id", description = "Update available book by id")
     public BookDto update(@PathVariable Long id,
@@ -67,7 +67,7 @@ public class BookController {
         return bookService.update(id, requestDto);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/search")
     @Operation(summary = "Search books", description = "Search books by available parameters")
     public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {

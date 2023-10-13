@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     @Operation(summary = "Get all categories",
             description = "Get a list of all available carts")
@@ -27,7 +27,7 @@ public class ShoppingCartController {
         return shoppingCartService.getAll(pageable);
     }
 
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{userId}")
     @Operation(summary = "Get shopping cart by user id",
             description = "Get available cart by userId")
