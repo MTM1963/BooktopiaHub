@@ -4,6 +4,7 @@ import booktopiahub.lib.FieldsValueMatch;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @FieldsValueMatch(
         field = "password",
@@ -11,6 +12,7 @@ import lombok.Data;
         message = "Passwords do not match!"
 )
 @Data
+@Accessors(chain = true)
 public class UserRegistrationRequest {
     @NotBlank
     @Size(min = 8, max = 50)
